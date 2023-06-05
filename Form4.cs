@@ -54,8 +54,17 @@ namespace Infection
                 case 9: 
                     fieldSize = 9;
                     break;
+                case 11:
+                    fieldSize = 11;
+                    break;
+                case 13:
+                    fieldSize = 13;
+                    break;
+                case 15:
+                    fieldSize = 15;
+                    break;
                 default:
-                    MessageBox.Show("Введіть число 5, 7 або 9", "Помилка!", MessageBoxButtons.OK);
+                    MessageBox.Show("Введіть непарне число", "Помилка!", MessageBoxButtons.OK);
                     break;
             }
             return fieldSize;
@@ -65,7 +74,7 @@ namespace Infection
         private void button1_Click(object sender, EventArgs e)
         {
             int fieldSize = CheckValue();
-            if(fieldSize == 5 || fieldSize == 7 || fieldSize == 9)
+            if(fieldSize==5||fieldSize == 7||fieldSize == 9|| fieldSize == 11|| fieldSize == 13|| fieldSize == 15)
             {
                 InfectionClass.FieldSize = fieldSize;
                 this.Hide();
@@ -98,17 +107,4 @@ namespace Infection
         }
     }
 }
-/*
-    Отче наш, що єси на небесах,
-    нехай святиться ім’я Твоє,
-    нехай прийде Царство Твоє,
-    нехай буде воля Твоя,
-    як на небі, так і на землі.
-    Хліб наш насущний дай нам сьогодні,
-    і прости нам провини наші,
-    як і ми прощаємо винуватцям нашим.
-    І не введи нас у спокусу,
-    але визволи нас від лукавого.
-    Бо Твоє є Царство, і сила, і слава
-    навіки. Амінь.
- */
+
