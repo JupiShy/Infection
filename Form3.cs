@@ -12,9 +12,12 @@ namespace Infection
 {
     public partial class Form3 : Form
     {
+        int colorTheme;
         public Form3()
         {
             InitializeComponent();
+            colorTheme = InfectionClass.ColorTheme;
+            Set_Theme();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -37,6 +40,17 @@ namespace Infection
         private void Form3_FormClosing(object sender, FormClosingEventArgs e)
         {
             
+        }
+        private void Set_Theme()
+        {
+            if (colorTheme == 0)
+            {
+                this.BackColor = Color.LightSteelBlue;
+            }
+            else if (colorTheme == 1)
+            {
+                this.BackColor = Color.LightSlateGray;
+            }
         }
 
         private void Form3_FormClosed(object sender, FormClosedEventArgs e)

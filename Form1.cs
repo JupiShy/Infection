@@ -12,6 +12,7 @@ namespace Infection
 {
     public partial class Form1 : Form
     {
+        int colorTheme;
         public Form1()
         {
             InitializeComponent();
@@ -19,7 +20,8 @@ namespace Infection
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            colorTheme = InfectionClass.ColorTheme;
+            Set_Theme();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -48,7 +50,21 @@ namespace Infection
 
         private void Theme_Click(object sender, EventArgs e)
         {
+            this.Hide();
+            Form5 change_theme = new Form5();
+            change_theme.Show();
+        }
 
+        private void Set_Theme()
+        {
+            if(colorTheme == 0)
+            {
+                this.BackColor = Color.LightSteelBlue;
+            }
+            else if(colorTheme == 1)
+            {
+                this.BackColor = Color.LightSlateGray;
+            }
         }
 
         private void Exit_Click(object sender, EventArgs e)
@@ -68,6 +84,11 @@ namespace Infection
         private void label1_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

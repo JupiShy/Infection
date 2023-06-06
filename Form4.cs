@@ -14,9 +14,12 @@ namespace Infection
 {
     public partial class Form4 : Form
     {
+        int colorTheme;
         public Form4()
         {
             InitializeComponent();
+            colorTheme = InfectionClass.ColorTheme;
+            Set_Theme();
         }
 
         private void Form4_Load(object sender, EventArgs e)
@@ -39,10 +42,6 @@ namespace Infection
             
         }
 
-        private void Form4_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter) button1.PerformClick();
-        }
 
         public int CheckValue()
         {
@@ -98,6 +97,17 @@ namespace Infection
             if (!Char.IsDigit(number) && number != 8)
             {
                 e.Handled = true;
+            }
+        }
+        private void Set_Theme()
+        {
+            if (colorTheme == 0)
+            {
+                this.BackColor = Color.LightSteelBlue;
+            }
+            else if (colorTheme == 1)
+            {
+                this.BackColor = Color.LightSlateGray;
             }
         }
 

@@ -18,8 +18,12 @@ namespace Infection
 
         ButtonCell[,] cells = new ButtonCell[fieldSize, fieldSize];
 
+        int[,] currentState = new int[fieldSize, fieldSize];
+
         bool IsPlaying = false;
         bool IsActing = false;
+
+        int colorTheme;
 
         int timeS, timeM = 0;
         int simTime = -1;
@@ -33,11 +37,36 @@ namespace Infection
         {
             InitializeComponent();
             Init();
+            colorTheme = InfectionClass.ColorTheme;
+            Set_Theme();
         }
 
         public void Init()
         {
+            InitArray();
             InitCells();
+        }
+        public int[,] InitArray()
+        {
+            for (int i = 0; i < fieldSize; i++)
+            {
+                for (int j = 0; j < fieldSize; j++)
+                {
+                    currentState[i, j] = 0;
+                }
+            }
+            return currentState;
+        }
+
+        public void Sync()
+        {
+            for (int i = 0; i < fieldSize; i++)
+            {
+                for (int j = 0; j < fieldSize; j++)
+                {
+                    currentState[i, j] = cells[i, j].State;
+                }
+            }
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -164,10 +193,10 @@ namespace Infection
         private void main_Simulation()
         {
             Spreading();
+            Sync();
             Healing();
             Immunity();
             Check_Sim();
-
         }
 
         public void Spreading()
@@ -180,7 +209,7 @@ namespace Infection
                     {
                         if(simTime > 0)
                         {
-                            if (cells[i, j].State == 1 && cells[i, j].State != 2)
+                            if (currentState[i, j] == 1)
                             {
                                 Randomizer();
                                 try
@@ -188,10 +217,6 @@ namespace Infection
                                     if (random1 > 50 && cells[i + 1, j].State != 2)
                                     {
                                         cells[i + 1, j].State = 1;
-                                    }
-                                    else
-                                    {
-
                                     }
                                 }
                                 catch { }
@@ -219,7 +244,6 @@ namespace Infection
                                     }
                                 }
                                 catch { }
-
                             }
                         }
                     }
@@ -236,7 +260,7 @@ namespace Infection
                 {
                     for (int j = 0; j < fieldSize; j++)
                     {
-                        if (cells[i, j].State == 1)
+                        if (currentState[i, j] == 1)
                         {
                             cells[i, j].TimeInfected++;
                         }
@@ -260,12 +284,12 @@ namespace Infection
                 {
                     for (int j = 0; j < fieldSize; j++)
                     {
-                        if (cells[i, j].State == 2)
+                        if (currentState[i, j] == 2)
                         {
                             cells[i, j].TimeImmune++;
                         }
 
-                        if (cells[i, j].TimeImmune == 4)
+                        if (cells[i, j].TimeImmune > 4)
                         {
                             cells[i, j].State = 0;
                             cells[i, j].TimeImmune = 0;
@@ -352,6 +376,7 @@ namespace Infection
 
             StopwatchReset();
             ResetStates();
+            InitArray();
             Check_Sim();
 
             Start.Enabled = true;
@@ -382,6 +407,17 @@ namespace Infection
 
         }
 
+        private void Set_Theme()
+        {
+            if (colorTheme == 0)
+            {
+                this.BackColor = Color.LightSteelBlue;
+            }
+            else if (colorTheme == 1)
+            {
+                this.BackColor = Color.LightSlateGray;
+            }
+        }
 
         private void button7_Click(object sender, EventArgs e)
         {
@@ -408,17 +444,3 @@ namespace Infection
     }
 
 }
-/*
-    Отче наш, що єси на небесах,
-    нехай святиться ім’я Твоє,
-    нехай прийде Царство Твоє,
-    нехай буде воля Твоя,
-    як на небі, так і на землі.
-    Хліб наш насущний дай нам сьогодні,
-    і прости нам провини наші,
-    як і ми прощаємо винуватцям нашим.
-    І не введи нас у спокусу,
-    але визволи нас від лукавого.
-    Бо Твоє є Царство, і сила, і слава
-    навіки. Амінь.
- */

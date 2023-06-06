@@ -42,7 +42,7 @@
             // menuLabel
             // 
             resources.ApplyResources(this.menuLabel, "menuLabel");
-            this.menuLabel.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.menuLabel.BackColor = System.Drawing.Color.Transparent;
             this.menuLabel.ForeColor = System.Drawing.Color.Black;
             this.menuLabel.Name = "menuLabel";
             this.menuLabel.Click += new System.EventHandler(this.label1_Click);
@@ -78,7 +78,7 @@
             // underTheme
             // 
             resources.ApplyResources(this.underTheme, "underTheme");
-            this.underTheme.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.underTheme.BackColor = System.Drawing.Color.Transparent;
             this.underTheme.ForeColor = System.Drawing.Color.Black;
             this.underTheme.Name = "underTheme";
             this.underTheme.Click += new System.EventHandler(this.label2_Click);
@@ -94,7 +94,7 @@
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
-            this.label1.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Name = "label1";
             this.label1.Click += new System.EventHandler(this.label1_Click_1);
@@ -115,6 +115,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

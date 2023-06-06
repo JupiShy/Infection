@@ -9,5 +9,6 @@ namespace Infection
     static class InfectionClass
     {
         public static int FieldSize;
+        public static int ColorTheme;
     }
 }
