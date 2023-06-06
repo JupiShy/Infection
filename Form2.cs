@@ -18,7 +18,7 @@ namespace Infection
 
         ButtonCell[,] cells = new ButtonCell[fieldSize, fieldSize];
 
-        int[,] currentState = new int[fieldSize, fieldSize];
+        int[,] currentState = new int[15, 15];
 
         bool IsPlaying = false;
         bool IsActing = false;
@@ -48,9 +48,9 @@ namespace Infection
         }
         public int[,] InitArray()
         {
-            for (int i = 0; i < fieldSize; i++)
+            for (int i = 0; i < 15; i++)
             {
-                for (int j = 0; j < fieldSize; j++)
+                for (int j = 0; j < 15; j++)
                 {
                     currentState[i, j] = 0;
                 }

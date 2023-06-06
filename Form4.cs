@@ -69,7 +69,7 @@ namespace Infection
                     fieldSize = 15;
                     break;
                 default:
-                    MessageBox.Show("Введіть непарне число", "Помилка!", MessageBoxButtons.OK);
+                    MessageBox.Show("Введіть непарне число від 5 до 15", "Помилка!", MessageBoxButtons.OK);
                     break;
             }
             return fieldSize;
