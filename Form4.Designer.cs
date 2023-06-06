@@ -54,7 +54,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(459, 19);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Увага! Число має бути непарним, від 5 до 13 включно";
+            this.label2.Text = "Увага! Число має бути непарним, від 5 до 15 включно";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // textBox1

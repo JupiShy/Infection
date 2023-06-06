@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
 
 namespace Infection
 {
@@ -36,6 +37,11 @@ namespace Infection
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             
+        }
+
+        private void Form4_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) button1.PerformClick();
         }
 
         public int CheckValue()

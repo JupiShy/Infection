@@ -45,8 +45,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
-            this.sec4 = new System.Windows.Forms.Timer(this.components);
-            this.sec6 = new System.Windows.Forms.Timer(this.components);
             this.button7 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -217,17 +215,6 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click_1);
             // 
-            // sec4
-            // 
-            this.sec4.Enabled = true;
-            this.sec4.Interval = 4000;
-            this.sec4.Tick += new System.EventHandler(this.timer2_Tick);
-            // 
-            // sec6
-            // 
-            this.sec6.Enabled = true;
-            this.sec6.Interval = 6000;
-            // 
             // button7
             // 
             this.button7.Font = new System.Drawing.Font("Arial", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -266,6 +253,7 @@
             this.Name = "Form2";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Infection";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form2_FormClosing);
             this.Load += new System.EventHandler(this.Form2_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -290,8 +278,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Timer sec4;
-        private System.Windows.Forms.Timer sec6;
         private System.Windows.Forms.Button button7;
     }
 }

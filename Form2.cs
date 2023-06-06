@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,18 +16,13 @@ namespace Infection
         static int fieldSize = InfectionClass.FieldSize;
         int cellSize;
 
-        int[,] currentState = new int[fieldSize, fieldSize];
-        int[,] futureState = new int[fieldSize, fieldSize];
-
-        Button[,] cells = new Button[fieldSize, fieldSize];
-
-        int[,] array = new int[fieldSize, fieldSize];
+        ButtonCell[,] cells = new ButtonCell[fieldSize, fieldSize];
 
         bool IsPlaying = false;
         bool IsActing = false;
 
         int timeS, timeM = 0;
-        int simTime = 1;
+        int simTime = -1;
 
         Random rnd = new Random();
 
@@ -41,27 +37,21 @@ namespace Infection
 
         public void Init()
         {
-            currentState = InitArray(currentState);
-            futureState = InitArray(futureState);
             InitCells();
         }
 
         private void Form2_Load(object sender, EventArgs e)
         {
+            foreach (var cell in cells)
+                cell.Dispose();
+
+            fieldSize = InfectionClass.FieldSize;
             label2.Text = InfectionClass.FieldSize.ToString();
+            cells = new ButtonCell[fieldSize, fieldSize];
+            InitCells();
         }
 
-        int[,] InitArray(int[,] arr)
-        {
-            for (int i = 0; i < fieldSize; i++)
-            {
-                for (int j = 0; j < fieldSize; j++)
-                {
-                    array[i, j] = 0;
-                }
-            }
-            return array;
-        }
+
 
         void InitCells()
         {
@@ -91,7 +81,7 @@ namespace Infection
             {
                 for (int j = 0; j < fieldSize; j++)
                 {
-                    Button button = new Button();
+                    ButtonCell button = new ButtonCell();
                     button.Size = new Size(cellSize, cellSize);
                     button.BackColor = Color.White;
 
@@ -102,23 +92,23 @@ namespace Infection
             }
         }
 
-        public void Check_Sim(int[,] array) //displays the current state of the field (updates the simulation)
+        public void Check_Sim() //displays the current state of the field (updates the simulation)
         {
             for (int i = 0; i < fieldSize; i++)
             {
                 for (int j = 0; j < fieldSize; j++)
                 {
-                    if (array[i, j] == 1)
+                    switch (cells[i, j].State)
                     {
-                        cells[i, j].BackColor = Color.DarkRed;
-                    }
-                    else if (array[i, j] == 0)
-                    {
-                        cells[i, j].BackColor = Color.LimeGreen;
-                    }
-                    else if (array[i, j] == 2)
-                    {
-                        cells[i, j].BackColor = Color.CornflowerBlue;
+                        case 0:
+                            cells[i, j].BackColor = Color.LimeGreen;
+                            break;
+                        case 1:
+                            cells[i, j].BackColor = Color.DarkRed;
+                            break;
+                        case 2:
+                            cells[i, j].BackColor = Color.CornflowerBlue;
+                            break;
                     }
                 }
             }
@@ -134,7 +124,7 @@ namespace Infection
             IsActing = false;
             IsPlaying = false;
 
-            this.Close();
+            this.Hide();
             Form1 menu = new Form1();
             menu.Show();
         }
@@ -163,8 +153,8 @@ namespace Infection
         {
             IsPlaying = true;
             int center = Convert.ToInt32(Math.Floor(Convert.ToDecimal(fieldSize / 2))); //calculation of the central point
-            array[center, center] = 1; //accepting the central point as infected
-            Check_Sim(array);
+            cells[center, center].State = 1; //accepting the central point as infected
+            Check_Sim();
             stopWatch_Start();
             main_Simulation();
             Start.Enabled = false;
@@ -176,7 +166,7 @@ namespace Infection
             Spreading();
             Healing();
             Immunity();
-            Check_Sim(array);
+            Check_Sim();
 
         }
 
@@ -188,49 +178,53 @@ namespace Infection
                 {
                     for (int j = 0; j < fieldSize; j++)
                     {
-                        if (array[i, j] == 1)
+                        if(simTime > 0)
                         {
-                            Randomizer();
-                            try
+                            if (cells[i, j].State == 1 && cells[i, j].State != 2)
                             {
-                                if (random1 > 50)
+                                Randomizer();
+                                try
                                 {
-                                    array[i + 1, j] = 1;
-                                }
-                                else
-                                {
-                                    
-                                }
-                            }
-                            catch { }
-                            try
-                            {
-                                if (random2 > 50)
-                                {
-                                    array[i - 1, j] = 1;
-                                }
-                            }
-                            catch { }
-                            try
-                            {
-                                if (random3 > 50)
-                                {
-                                    array[i, j + 1] = 1;
-                                }
-                            }
-                            catch { }
-                            try
-                            {
-                                if (random4 > 50)
-                                {
-                                    array[i, j - 1] = 1;
-                                }
-                            }
-                            catch { }
+                                    if (random1 > 50 && cells[i + 1, j].State != 2)
+                                    {
+                                        cells[i + 1, j].State = 1;
+                                    }
+                                    else
+                                    {
 
+                                    }
+                                }
+                                catch { }
+                                try
+                                {
+                                    if (random2 > 50 && cells[i - 1, j].State != 2)
+                                    {
+                                        cells[i - 1, j].State = 1;
+                                    }
+                                }
+                                catch { }
+                                try
+                                {
+                                    if (random3 > 50 && cells[i, j + 1].State != 2)
+                                    {
+                                        cells[i, j + 1].State = 1;
+                                    }
+                                }
+                                catch { }
+                                try
+                                {
+                                    if (random4 > 50 && cells[i, j - 1].State != 2)
+                                    {
+                                        cells[i, j - 1].State = 1;
+                                    }
+                                }
+                                catch { }
+
+                            }
                         }
                     }
                 }
+                simTime++;
             }
         }
 
@@ -242,21 +236,44 @@ namespace Infection
                 {
                     for (int j = 0; j < fieldSize; j++)
                     {
-                        if (array[i, j] == 1)
+                        if (cells[i, j].State == 1)
                         {
-                            if (random1 < 50)
-                            {
+                            cells[i, j].TimeInfected++;
+                        }
 
-                            }
+                        if (cells[i, j].TimeInfected > 6)
+                        {
+                            cells[i, j].State = 2;
+                            cells[i, j].TimeInfected = 0;
                         }
                     }
+
                 }
             }
         }
 
         public void Immunity()
         {
+            if (IsPlaying == true)
+            {
+                for (int i = 0; i < fieldSize; i++)
+                {
+                    for (int j = 0; j < fieldSize; j++)
+                    {
+                        if (cells[i, j].State == 2)
+                        {
+                            cells[i, j].TimeImmune++;
+                        }
 
+                        if (cells[i, j].TimeImmune == 4)
+                        {
+                            cells[i, j].State = 0;
+                            cells[i, j].TimeImmune = 0;
+                        }
+                    }
+
+                }
+            }
         }
 
 
@@ -333,14 +350,28 @@ namespace Infection
             IsActing = false;
             IsPlaying = false;
 
-            Reset();
-            InitArray(array);
-            Check_Sim(array);
+            StopwatchReset();
+            ResetStates();
+            Check_Sim();
 
             Start.Enabled = true;
         }
 
-        private void Reset() //reset of stopwatch
+        private void ResetStates()
+        {
+            for (int i = 0; i < fieldSize; i++)
+            {
+                for (int j = 0; j < fieldSize; j++)
+                {
+                    cells[i, j].State = 0;
+                    cells[i, j].TimeInfected = 0;
+                    cells[i, j].TimeImmune = 0;
+                }
+
+            }
+        }
+
+        private void StopwatchReset() //reset of stopwatch
         {
             timeS = 0;
             timeM = 0;
@@ -360,12 +391,22 @@ namespace Infection
             if (MessageBox.Show(message, caption, exit) == DialogResult.Yes)
                 Environment.Exit(0);
         }
+        private void Form2_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void Form2_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
 
         private void label8_Click(object sender, EventArgs e)
         {
 
         }
     }
+
 }
 /*
     Отче наш, що єси на небесах,
