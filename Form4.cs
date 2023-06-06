@@ -15,6 +15,7 @@ namespace Infection
     public partial class Form4 : Form
     {
         int colorTheme;
+        int fieldSize;
         public Form4()
         {
             InitializeComponent();
@@ -45,8 +46,10 @@ namespace Infection
 
         public int CheckValue()
         {
-            int fieldSize = System.Convert.ToInt32(textBox1.Text);
-
+            try{
+                fieldSize = System.Convert.ToInt32(textBox1.Text);
+            }
+            catch { }
 
             switch(fieldSize)
             {

@@ -46,6 +46,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -115,7 +116,7 @@
             // 
             // Start
             // 
-            this.Start.Location = new System.Drawing.Point(1037, 456);
+            this.Start.Location = new System.Drawing.Point(878, 481);
             this.Start.Name = "Start";
             this.Start.Size = new System.Drawing.Size(175, 55);
             this.Start.TabIndex = 7;
@@ -125,7 +126,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(1037, 517);
+            this.button6.Location = new System.Drawing.Point(1059, 481);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(175, 55);
             this.button6.TabIndex = 8;
@@ -207,7 +208,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(1037, 578);
+            this.button5.Location = new System.Drawing.Point(1059, 542);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(175, 55);
             this.button5.TabIndex = 15;
@@ -226,12 +227,23 @@
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(878, 542);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(175, 55);
+            this.button8.TabIndex = 17;
+            this.button8.Text = "Продовжити";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSteelBlue;
             this.ClientSize = new System.Drawing.Size(1262, 673);
+            this.Controls.Add(this.button8);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.label5);
@@ -279,5 +291,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button button8;
     }
 }

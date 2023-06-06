@@ -46,6 +46,7 @@ namespace Infection
             InitArray();
             InitCells();
         }
+
         public int[,] InitArray()
         {
             for (int i = 0; i < 15; i++)
@@ -186,7 +187,10 @@ namespace Infection
             Check_Sim();
             stopWatch_Start();
             main_Simulation();
+            button6.Enabled = true;
             Start.Enabled = false;
+            button8.Enabled = false;
+            button5.Enabled = false;
 
         }
 
@@ -353,6 +357,10 @@ namespace Infection
         private void button6_Click(object sender, EventArgs e)//button that stops the simulation
         {
             stopSim();
+            button8.Enabled = true;
+            button5.Enabled = true;
+            button6.Enabled = false;
+
         }
 
         private void timer2_Tick(object sender, EventArgs e)
@@ -364,8 +372,6 @@ namespace Infection
         {
             IsActing = false;
             IsPlaying = false;
-
-            Start.Enabled = true;
         }
 
 
@@ -380,6 +386,9 @@ namespace Infection
             Check_Sim();
 
             Start.Enabled = true;
+            button8.Enabled = false;
+            button6.Enabled = false;
+            button5.Enabled = false;
         }
 
         private void ResetStates()
@@ -419,13 +428,23 @@ namespace Infection
             }
         }
 
+        private void button8_Click(object sender, EventArgs e)
+        {
+            IsPlaying = true;
+            IsActing = true;
+
+            button8.Enabled = false;
+            button6.Enabled = true;
+            button5.Enabled = false;
+        }
+
         private void button7_Click(object sender, EventArgs e)
         {
             MessageBoxButtons exit = MessageBoxButtons.YesNo;
             String message = "Ви справді хочете закрити програму?";
             String caption = "Вихід";
             if (MessageBox.Show(message, caption, exit) == DialogResult.Yes)
-                Environment.Exit(0);
+                Application.Exit();
         }
         private void Form2_FormClosed(object sender, FormClosedEventArgs e)
         {
