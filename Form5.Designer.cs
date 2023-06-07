@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form5));
             this.menuLabel = new System.Windows.Forms.Label();
             this.Light = new System.Windows.Forms.Button();
             this.Dark = new System.Windows.Forms.Button();
@@ -97,6 +98,7 @@
             this.Controls.Add(this.Light);
             this.Controls.Add(this.menuLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form5";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
