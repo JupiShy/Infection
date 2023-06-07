@@ -18,7 +18,7 @@ namespace Infection
 
         ButtonCell[,] cells = new ButtonCell[fieldSize, fieldSize];
 
-        int[,] currentState = new int[15, 15];
+        int[,] currentState = new int[19, 19];
 
         bool IsPlaying = false;
         bool IsActing = false;
@@ -39,6 +39,10 @@ namespace Infection
             Init();
             colorTheme = InfectionClass.ColorTheme;
             Set_Theme();
+
+            button8.Enabled = false;
+            button6.Enabled = false;
+            button5.Enabled = false;
         }
 
         public void Init()
@@ -104,6 +108,12 @@ namespace Infection
                     break;
                 case 15:
                     cellSize = 33;
+                    break;
+                case 17:
+                    cellSize = 29;
+                    break;
+                case 19:
+                    cellSize = 26;
                     break;
             }
 
@@ -197,9 +207,9 @@ namespace Infection
         private void main_Simulation()
         {
             Spreading();
-            Sync();
             Healing();
             Immunity();
+            Sync();
             Check_Sim();
         }
 
@@ -218,7 +228,7 @@ namespace Infection
                                 Randomizer();
                                 try
                                 {
-                                    if (random1 > 50 && cells[i + 1, j].State != 2)
+                                    if (random1 > 50 && currentState[i + 1, j] != 2)
                                     {
                                         cells[i + 1, j].State = 1;
                                     }
@@ -226,7 +236,7 @@ namespace Infection
                                 catch { }
                                 try
                                 {
-                                    if (random2 > 50 && cells[i - 1, j].State != 2)
+                                    if (random2 > 50 && currentState[i - 1, j] != 2)
                                     {
                                         cells[i - 1, j].State = 1;
                                     }
@@ -234,7 +244,7 @@ namespace Infection
                                 catch { }
                                 try
                                 {
-                                    if (random3 > 50 && cells[i, j + 1].State != 2)
+                                    if (random3 > 50 && currentState[i, j + 1] != 2)
                                     {
                                         cells[i, j + 1].State = 1;
                                     }
@@ -242,7 +252,7 @@ namespace Infection
                                 catch { }
                                 try
                                 {
-                                    if (random4 > 50 && cells[i, j - 1].State != 2)
+                                    if (random4 > 50 && currentState[i, j - 1] != 2)
                                     {
                                         cells[i, j - 1].State = 1;
                                     }
@@ -271,6 +281,7 @@ namespace Infection
 
                         if (cells[i, j].TimeInfected > 6)
                         {
+                            currentState[i, j] = 2;
                             cells[i, j].State = 2;
                             cells[i, j].TimeInfected = 0;
                         }
@@ -293,8 +304,9 @@ namespace Infection
                             cells[i, j].TimeImmune++;
                         }
 
-                        if (cells[i, j].TimeImmune > 4)
+                        if (cells[i, j].TimeImmune == 4)
                         {
+                            currentState[i, j] = 0;
                             cells[i, j].State = 0;
                             cells[i, j].TimeImmune = 0;
                         }
@@ -383,6 +395,7 @@ namespace Infection
             StopwatchReset();
             ResetStates();
             InitArray();
+            Sync();
             Check_Sim();
 
             Start.Enabled = true;

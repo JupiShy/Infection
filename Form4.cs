@@ -71,8 +71,14 @@ namespace Infection
                 case 15:
                     fieldSize = 15;
                     break;
+                case 17:
+                    fieldSize = 17;
+                    break;
+                case 19:
+                    fieldSize = 19;
+                    break;
                 default:
-                    MessageBox.Show("Введіть непарне число від 5 до 15", "Помилка!", MessageBoxButtons.OK);
+                    MessageBox.Show("Введіть непарне число від 5 до 19", "Помилка!", MessageBoxButtons.OK);
                     break;
             }
             return fieldSize;
@@ -82,7 +88,7 @@ namespace Infection
         private void button1_Click(object sender, EventArgs e)
         {
             int fieldSize = CheckValue();
-            if(fieldSize==5||fieldSize == 7||fieldSize == 9|| fieldSize == 11|| fieldSize == 13|| fieldSize == 15)
+            if(fieldSize==5||fieldSize == 7||fieldSize == 9|| fieldSize == 11|| fieldSize == 13|| fieldSize == 15 || fieldSize == 17 || fieldSize == 19)
             {
                 InfectionClass.FieldSize = fieldSize;
                 this.Hide();
