@@ -16,7 +16,6 @@ namespace Infection
         public Form1()
         {
             InitializeComponent();
-            this.ControlBox = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
