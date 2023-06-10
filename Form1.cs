@@ -16,6 +16,7 @@ namespace Infection
         public Form1()
         {
             InitializeComponent();
+            this.ControlBox = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -73,7 +74,7 @@ namespace Infection
             String message = "Ви справді хочете закрити програму?";
             String caption = "Вихід";
             if (MessageBox.Show(message, caption, exit) == DialogResult.Yes)
-                Environment.Exit(0);
+                Application.Exit();
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -88,7 +89,7 @@ namespace Infection
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Application.Exit();
+                        
         }
     }
 }
