@@ -304,7 +304,7 @@ namespace Infection
                             cells[i, j].TimeImmune++;
                         }
 
-                        if (cells[i, j].TimeImmune == 4)
+                        if (cells[i, j].TimeImmune > 4)
                         {
                             currentState[i, j] = 0;
                             cells[i, j].State = 0;
