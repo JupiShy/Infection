@@ -35,5 +35,10 @@ namespace Infection
             Form1 menu = new Form1();
             menu.Show();
         }
+
+        private void Form5_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
