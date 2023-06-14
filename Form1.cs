@@ -18,10 +18,10 @@ namespace Infection
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e) //коли форма загружжається
         {
-            colorTheme = InfectionClass.ColorTheme;
-            Set_Theme();
+            colorTheme = InfectionClass.ColorTheme; //бере значення кольору теми з публічної статичної змінної
+            Set_Theme(); //активує зміну теми
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -29,18 +29,18 @@ namespace Infection
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e) 
         {
-            Form3 infectionInfo = new Form3();
-            infectionInfo.Show();
-            this.Hide();
+            Form3 infectionInfo = new Form3(); 
+            infectionInfo.Show(); //відкриває інформаційний лист
+            this.Hide(); //головне меню приховується
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Hide(); //головне меню приховується
             Form4 dialogWindow = new Form4();
-            dialogWindow.Show();
+            dialogWindow.Show(); //відкривається вікно вводу розміру поля
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -52,22 +52,22 @@ namespace Infection
         {
             this.Hide();
             Form5 change_theme = new Form5();
-            change_theme.Show();
+            change_theme.Show(); //відкривається вікно зміни кольорової теми
         }
 
-        private void Set_Theme()
+        private void Set_Theme() //функція зміни теми
         {
-            if(colorTheme == 0)
+            if(colorTheme == 0) //якщо colorTheme дорівнює 0 (за замовчуванням)
             {
-                this.BackColor = Color.LightSteelBlue;
+                this.BackColor = Color.LightSteelBlue; //світлий фон
             }
-            else if(colorTheme == 1)
+            else if(colorTheme == 1) //якщо colorTheme дорівнює 1
             {
-                this.BackColor = Color.LightSlateGray;
+                this.BackColor = Color.LightSlateGray; //темніший фон
             }
         }
 
-        private void Exit_Click(object sender, EventArgs e)
+        private void Exit_Click(object sender, EventArgs e) //нажаття кнопки виходу
         {
             MessageBoxButtons exit = MessageBoxButtons.YesNo;
             String message = "Ви справді хочете закрити програму?";

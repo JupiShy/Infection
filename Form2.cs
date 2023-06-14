@@ -13,19 +13,19 @@ namespace Infection
 {
     public partial class Form2 : Form
     {
-        static int fieldSize = InfectionClass.FieldSize;
-        int cellSize;
+        static int fieldSize = InfectionClass.FieldSize; //прийняття значення розміру поля з публічної статичної змінної статичного класу InfectionClass
+        int cellSize; //розмір клітини
 
-        ButtonCell[,] cells = new ButtonCell[fieldSize, fieldSize];
+        ButtonCell[,] cells = new ButtonCell[fieldSize, fieldSize]; //масив кнопок підкласу ButtonCell
 
-        int[,] currentState = new int[19, 19];
+        int[,] currentState = new int[19, 19]; //"нижній" масив, який дорівнює стану поля на даний момент.
 
-        bool IsPlaying = false;
-        bool IsActing = false;
+        bool IsPlaying = false; //значення активності симуляції
+        bool IsActing = false; //значення активності секундоміру
 
         int colorTheme;
 
-        int timeS, timeM = 0;
+        int timeS, timeM = 0; //timeS - секунди, timeM - хвилини
         int simTime = -1;
 
         Random rnd = new Random();
@@ -204,33 +204,33 @@ namespace Infection
 
         }
 
-        private void main_Simulation()
+        private void main_Simulation() //основна функція, яка запускає усі процеси моделювання
         {
-            Spreading();
-            Healing();
-            Immunity();
-            Sync();
-            Check_Sim();
+            Spreading(); //поширення
+            Healing(); //лікування
+            Immunity(); //отримання імунітету
+            Sync(); //синхронізація масивів
+            Check_Sim(); //вивід стану ділянки шкіри
         }
 
-        public void Spreading()
+        public void Spreading() //функція поширення інфекції
         {
-            if (IsPlaying == true)
+            if (IsPlaying == true) //якщо симуляція запущена
             {
                 for (int i = 0; i < fieldSize; i++)
                 {
                     for (int j = 0; j < fieldSize; j++)
                     {
-                        if(simTime > 0)
+                        if(simTime > 0) //якщо час симуляції більше нуля 
                         {
-                            if (currentState[i, j] == 1)
+                            if (currentState[i, j] == 1) //якщо клітина заражена 
                             {
-                                Randomizer();
+                                Randomizer(); //вираховуємо шанс зараження сусіндіх клітин
                                 try
                                 {
-                                    if (random1 > 50 && currentState[i + 1, j] != 2)
+                                    if (random1 > 50 && currentState[i + 1, j] != 2) //якщо шанс спрацював та сусідня клітина не має імунітету
                                     {
-                                        cells[i + 1, j].State = 1;
+                                        cells[i + 1, j].State = 1; //сусідня клітина праворуч заражається
                                     }
                                 }
                                 catch { }
@@ -238,7 +238,7 @@ namespace Infection
                                 {
                                     if (random2 > 50 && currentState[i - 1, j] != 2)
                                     {
-                                        cells[i - 1, j].State = 1;
+                                        cells[i - 1, j].State = 1; //сусідня клітина ліворуч заражається
                                     }
                                 }
                                 catch { }
@@ -246,7 +246,7 @@ namespace Infection
                                 {
                                     if (random3 > 50 && currentState[i, j + 1] != 2)
                                     {
-                                        cells[i, j + 1].State = 1;
+                                        cells[i, j + 1].State = 1; //сусідня клітина згори заражається
                                     }
                                 }
                                 catch { }
@@ -254,7 +254,7 @@ namespace Infection
                                 {
                                     if (random4 > 50 && currentState[i, j - 1] != 2)
                                     {
-                                        cells[i, j - 1].State = 1;
+                                        cells[i, j - 1].State = 1; //сусідня клітина знизу заражається
                                     }
                                 }
                                 catch { }
@@ -262,28 +262,28 @@ namespace Infection
                         }
                     }
                 }
-                simTime++;
+                simTime++; //+1 до внутрішнього секундоміру 
             }
         }
 
-        public void Healing()
+        public void Healing() //функція лікування клітин
         {
-            if (IsPlaying == true)
+            if (IsPlaying == true) //якщо симуляція активна
             {
                 for (int i = 0; i < fieldSize; i++)
                 {
                     for (int j = 0; j < fieldSize; j++)
                     {
-                        if (currentState[i, j] == 1)
+                        if (currentState[i, j] == 1) //якщо клітина інфікована
                         {
-                            cells[i, j].TimeInfected++;
+                            cells[i, j].TimeInfected++; //додається значення 1 до часу, скільки клітина інфікована
                         }
 
-                        if (cells[i, j].TimeInfected > 6)
+                        if (cells[i, j].TimeInfected > 6) //якщо це значення більше 6
                         {
                             currentState[i, j] = 2;
-                            cells[i, j].State = 2;
-                            cells[i, j].TimeInfected = 0;
+                            cells[i, j].State = 2; //клітина отримує імунітет
+                            cells[i, j].TimeInfected = 0; //час, скільки клітина інфікована скидується
                         }
                     }
 
@@ -291,24 +291,24 @@ namespace Infection
             }
         }
 
-        public void Immunity()
+        public void Immunity() //функція відповідальна за імунітет
         {
-            if (IsPlaying == true)
+            if (IsPlaying == true) //якщо симуляція активна
             {
                 for (int i = 0; i < fieldSize; i++)
                 {
                     for (int j = 0; j < fieldSize; j++)
                     {
-                        if (currentState[i, j] == 2)
+                        if (currentState[i, j] == 2) //якщо клітина має імунітет
                         {
-                            cells[i, j].TimeImmune++;
+                            cells[i, j].TimeImmune++; //+1 до значення, скільки часу клітина вже має імунітет
                         }
 
-                        if (cells[i, j].TimeImmune > 4)
+                        if (cells[i, j].TimeImmune > 4) //якщо клітина має імунітет вже 4 секунди
                         {
-                            currentState[i, j] = 0;
-                            cells[i, j].State = 0;
-                            cells[i, j].TimeImmune = 0;
+                            currentState[i, j] = 0; //клітина виліковується
+                            cells[i, j].State = 0; //клітина виліковується
+                            cells[i, j].TimeImmune = 0; //скидується значення секундоміру імунітету
                         }
                     }
 
@@ -317,7 +317,7 @@ namespace Infection
         }
 
 
-        private void Randomizer()
+        private void Randomizer() //функція для утворення шансу 50% по чотирьом від клітини сторонам
         {
             random1 = rnd.Next(0, 100);
             random2 = rnd.Next(0, 100);
@@ -332,30 +332,30 @@ namespace Infection
 
         }
 
-        private void timer1_Tick(object sender, EventArgs e) //when 1 tick passes, 1 second is added, if more than 60 seconds, 1 minute is added
+        private void timer1_Tick(object sender, EventArgs e) //коли проходить 1 тік таймеру (1 секунда)
         {
-            if (IsActing == true)
+            if (IsActing == true) //і якщо секундомір активний
             {
-                timeS++;
+                timeS++; //додається 1 секунда
 
-                if (timeS > 59)
+                if (timeS > 59) //якщо секунд більше 59
                 {
-                    timeM++;
-                    timeS = 0;
+                    timeM++; //додається 1 хвилина
+                    timeS = 0; //секунди обнуляються
                 }
 
             }
-            TimeChange();
+            TimeChange(); //час на циферблаті змінюється
 
 
-            if (IsPlaying == true) //timer of simulation for code
+            if (IsPlaying == true) //додатковий секундомір для коду
             {
                 simTime++;
                 main_Simulation();
             }
         }
 
-        private void TimeChange() //function that changes the labels to the current stopwatch time
+        private void TimeChange() //функція яка змінює лейбли відповідальні за секундомір
         {
             label6.Text = String.Format("{0:00}", timeM);
             label7.Text = String.Format("{0:00}", timeS);
@@ -366,7 +366,7 @@ namespace Infection
 
         }
 
-        private void button6_Click(object sender, EventArgs e)//button that stops the simulation
+        private void button6_Click(object sender, EventArgs e)//кнопка яка зупиняє симуляцію
         {
             stopSim();
             button8.Enabled = true;
@@ -380,14 +380,14 @@ namespace Infection
 
         }
 
-        private void stopSim() //stops the simulation
+        private void stopSim() //функція, що зупиняє активність симуляції та таймеру
         {
             IsActing = false;
             IsPlaying = false;
         }
 
 
-        private void button5_Click_1(object sender, EventArgs e) //button Перезапустити, activates resetting of simulation
+        private void button5_Click_1(object sender, EventArgs e) //кнопка Перезапустити, активує перезапуск симуляції
         {
             IsActing = false;
             IsPlaying = false;
@@ -404,7 +404,7 @@ namespace Infection
             button5.Enabled = false;
         }
 
-        private void ResetStates()
+        private void ResetStates() //скидування до початкового значення 0 додаткових параметрів кожної кнопки
         {
             for (int i = 0; i < fieldSize; i++)
             {
@@ -418,18 +418,18 @@ namespace Infection
             }
         }
 
-        private void StopwatchReset() //reset of stopwatch
+        private void StopwatchReset() //скидування таймеру
         {
             timeS = 0;
             timeM = 0;
         }
-        private void stopWatch_Start() //a function that gives a sign that the timer is activated
+        private void stopWatch_Start() //функція, що активує таймер
         {
             IsActing = true;
 
         }
 
-        private void Set_Theme()
+        private void Set_Theme() //установка теми
         {
             if (colorTheme == 0)
             {

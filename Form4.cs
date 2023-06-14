@@ -44,10 +44,10 @@ namespace Infection
         }
 
 
-        public int CheckValue()
+        public int CheckValue() //функція, що перевіряє значення
         {
             try{
-                fieldSize = System.Convert.ToInt32(textBox1.Text);
+                fieldSize = System.Convert.ToInt32(textBox1.Text); //розмір поля дорівнює конвертованому в інт32 значенню тексту з textBox1
             }
             catch { }
 
@@ -78,34 +78,34 @@ namespace Infection
                     fieldSize = 19;
                     break;
                 default:
-                    MessageBox.Show("Введіть непарне число від 5 до 19", "Помилка!", MessageBoxButtons.OK);
+                    MessageBox.Show("Введіть непарне число від 5 до 19", "Помилка!", MessageBoxButtons.OK); //помилка при некоректному значенні
                     break;
             }
-            return fieldSize;
+            return fieldSize; //повертає розмір поля
         }
         
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e) //кнопка ОК
         {
-            int fieldSize = CheckValue();
+            int fieldSize = CheckValue(); 
             if(fieldSize==5||fieldSize == 7||fieldSize == 9|| fieldSize == 11|| fieldSize == 13|| fieldSize == 15 || fieldSize == 17 || fieldSize == 19)
             {
-                InfectionClass.FieldSize = fieldSize;
+                InfectionClass.FieldSize = fieldSize; //прирівнює значення змінної FieldSize класу InfectionClass до fieldSize, щоб передати значення у форму 2
                 this.Hide();
                 Form2 infModel = new Form2();
-                infModel.Show();
+                infModel.Show(); //відкриває вікно з симуляцією
             }
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            textBox1.MaxLength = 2;
+            textBox1.MaxLength = 2; //обмеження в кількості можливих введених символів
 
-            char number = e.KeyChar;
+            char number = e.KeyChar; //символ number дорівнює введеному з клавіатури значенню
 
-            if (!Char.IsDigit(number) && number != 8)
+            if (!Char.IsDigit(number) && number != 8) //якщо символ це цифра і не є пробілом
             {
-                e.Handled = true;
+                e.Handled = true; //ввід підтверджується
             }
         }
         private void Set_Theme()

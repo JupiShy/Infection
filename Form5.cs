@@ -15,16 +15,16 @@ namespace Infection
         public Form5()
         {
             InitializeComponent();
-            this.ControlBox = false;
+            this.ControlBox = false; //відключення кнопок згортання, розгортання та закриття вікна 
         }
 
-        private void Light_Click(object sender, EventArgs e)
+        private void Light_Click(object sender, EventArgs e) //кнопка вибору світлої теми
         {
             InfectionClass.ColorTheme = 0;
             this.BackColor = Color.LightSteelBlue;
         }
 
-        private void Dark_Click(object sender, EventArgs e)
+        private void Dark_Click(object sender, EventArgs e) //кнопка вибору темної теми
         {
             InfectionClass.ColorTheme = 1;
             this.BackColor = Color.LightSlateGray;
